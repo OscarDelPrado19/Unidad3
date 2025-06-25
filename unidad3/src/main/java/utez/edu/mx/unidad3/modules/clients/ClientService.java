@@ -55,4 +55,21 @@ public class ClientService {
 
         }
     }
+
+    @Transactional(rollbackFor = {SQLException.class, Exception.class})
+    public APIResponse updateClient(Client payload){
+        try {
+            Client found = clientRepository.findById(payload.getId()).orElse(null);
+            if (found == null){
+                return new APIResponse("El cliente no existe", true, HttpStatus.NOT_FOUND);
+            }
+
+            clientRepository.save(payload);
+            return new APIResponse("Operación exitosa",found, false, HttpStatus.OK);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return new APIResponse("Error al actualizar al cliente", true, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
 }
