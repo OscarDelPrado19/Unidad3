@@ -39,7 +39,7 @@ public class ClientController {
     @Operation(summary = "Registrar clientes", description = "Registra un cliente en el sistema")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "Respuesta de operación exitosa",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
@@ -71,6 +71,14 @@ public class ClientController {
     @Operation(summary = "Buscar cliente", description = "busca un cliente en el sistema por ID")
     @ApiResponses(value = {
             @ApiResponse(
+                    responseCode = "200",
+                    description = "Respuesta de operación exitosa",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            ),
+            @ApiResponse(
                     responseCode = "400",
                     description = "Respuesta de operación erronea",
                     content = {
@@ -94,6 +102,14 @@ public class ClientController {
     @PutMapping("")
     @Operation(summary = "Modificar clientes", description = "modifica un cliente en el sistema")
     @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Respuesta de operación exitosa",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            ),
             @ApiResponse(
                     responseCode = "400",
                     description = "Respuesta de operación erronea",
@@ -119,6 +135,14 @@ public class ClientController {
     @DeleteMapping("")
     @Operation(summary = "Eliminar clientes", description = "Elimina un cliente en el sistema")
     @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Respuesta de operación exitosa",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            ),
             @ApiResponse(
                     responseCode = "400",
                     description = "Respuesta de operación erronea",
