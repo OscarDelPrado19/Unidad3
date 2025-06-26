@@ -72,4 +72,15 @@ public class ClientController {
         APIResponse response = clientService.findById(id);
         return new ResponseEntity<>(response,response.getStatus());
     }
+    @PutMapping("")
+    public ResponseEntity<APIResponse> updateClient(@RequestBody Client payload){
+        APIResponse response = clientService.updateClient(payload);
+        return new ResponseEntity<>(response,response.getStatus());
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<APIResponse> deleteClient(@RequestBody Client payload){
+        APIResponse response = clientService.deleteClient(payload);
+        return new ResponseEntity<>(response,response.getStatus());
+    }
 }
