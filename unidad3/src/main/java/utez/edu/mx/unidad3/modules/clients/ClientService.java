@@ -1,5 +1,6 @@
 package utez.edu.mx.unidad3.modules.clients;
 
+import org.springframework.beans.PropertyAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -66,10 +67,31 @@ public class ClientService {
 
             clientRepository.save(payload);
             return new APIResponse("Operación exitosa",found, false, HttpStatus.OK);
+        }catch (PropertyAccessException nullex){
+        nullex.printStackTrace();
+        return new APIResponse("No se aceptan valores nulos", true, HttpStatus.BAD_REQUEST);
+
+        }catch (Exception ex){
+                ex.printStackTrace();
+                return new APIResponse("Error al actualizar al cliente", true, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+    }
+
+    @Transactional(rollbackFor = {SQLException.class, Exception.class})
+    public APIResponse deleteClient(Client payload){
+        try{
+            Client found = clientRepository.findById(payload.getId()).orElse(null);
+            if (found == null){
+                return new APIResponse("El cliente no existe", true, HttpStatus.NOT_FOUND);
+            }
+
+            clientRepository.deleteById(found.getId());
+            return new APIResponse("Operación exitosa", false, HttpStatus.OK);
         }catch (Exception ex){
             ex.printStackTrace();
-            return new APIResponse("Error al actualizar al cliente", true, HttpStatus.INTERNAL_SERVER_ERROR);
-
+            return new APIResponse("Error al eliminar al cliente", true, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
