@@ -68,17 +68,74 @@ public class ClientController {
         return new ResponseEntity<>(response,response.getStatus());
     }
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar cliente", description = "busca un cliente en el sistema por ID")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Respuesta de operación erronea",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Respuesta de error interno en el servidor",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            )
+    })
     public ResponseEntity<APIResponse> findById(@PathVariable("id")Long id){
         APIResponse response = clientService.findById(id);
         return new ResponseEntity<>(response,response.getStatus());
     }
     @PutMapping("")
+    @Operation(summary = "Modificar clientes", description = "modifica un cliente en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Respuesta de operación erronea",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Respuesta de error interno en el servidor",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            )
+    })
     public ResponseEntity<APIResponse> updateClient(@RequestBody Client payload){
         APIResponse response = clientService.updateClient(payload);
         return new ResponseEntity<>(response,response.getStatus());
     }
 
     @DeleteMapping("")
+    @Operation(summary = "Eliminar clientes", description = "Elimina un cliente en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Respuesta de operación erronea",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Respuesta de error interno en el servidor",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = APIResponse.class)),
+                    }
+            )
+    })
     public ResponseEntity<APIResponse> deleteClient(@RequestBody Client payload){
         APIResponse response = clientService.deleteClient(payload);
         return new ResponseEntity<>(response,response.getStatus());

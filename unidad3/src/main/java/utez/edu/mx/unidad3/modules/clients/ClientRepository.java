@@ -17,7 +17,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Modifying // Esta nos ayuda a modificar o eliminar directamente en la base de datos
     @Query(value = "DELETE FROM client WHERE id = :id", nativeQuery = true)
-    void delete(@Param("id") Long id);
+    void delete(@Param("id") long id);
 
     Optional<Client> findByEmail(String email);
 }
