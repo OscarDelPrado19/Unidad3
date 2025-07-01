@@ -2,8 +2,15 @@ package utez.edu.mx.unidad3.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -17,7 +24,8 @@ public class MainSecurity {
     @Bean
     public SecurityFilterChain doFilterInternal(HttpSecurity http) throws Exception{
         http.csrf(c-> c.disable()).cors(c-> c.configurationSource(corsRegistry())).authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/client/**").permitAll()
+                .requestMatchers("/api/client/**").hasRole("ADMIN")
+                .requestMatchers("/api/cede/**").hasRole("EMPLOYEE")
                 .requestMatchers(
                         "/swagger-ui.html",
                         "/swagger-ui/**",
@@ -27,7 +35,7 @@ public class MainSecurity {
                         "/webjars/**"
                 ).permitAll()
                 .anyRequest().authenticated()
-        );
+        ).httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
@@ -43,5 +51,29 @@ public class MainSecurity {
         UrlBasedCorsConfigurationSource sourse = new UrlBasedCorsConfigurationSource();
         sourse.registerCorsConfiguration("/**",configuration);
         return sourse;
+    }
+
+    @Bean
+    public UserDetailsService generateAdmin(){
+        UserDetails admin = User.builder()
+                .username("root")
+                .password(passwordEncoder().encode("root"))
+                .roles("ADMIN")
+                .build();
+        UserDetails employee = User.builder()
+                .username("cliente")
+                .password(passwordEncoder().encode("root"))
+                .roles("EMPLOYEE")
+                .build();
+        return new InMemoryUserDetailsManager(admin);
+    }
+
+
+
+
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }
