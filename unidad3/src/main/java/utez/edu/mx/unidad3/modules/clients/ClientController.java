@@ -39,7 +39,7 @@ public class ClientController {
     @Operation(summary = "Registrar clientes", description = "Registra un cliente en el sistema")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "Respuesta de operación exitosa",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = APIResponse.class)),
