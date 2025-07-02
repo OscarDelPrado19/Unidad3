@@ -35,7 +35,7 @@ public class MainSecurity {
                         "/webjars/**"
                 ).permitAll()
                 .anyRequest().authenticated()
-        ).httpBasic(Customizer.withDefaults());
+        );
         return http.build();
     }
 
@@ -53,7 +53,7 @@ public class MainSecurity {
         return sourse;
     }
 
-    @Bean
+    /*@Bean
     public UserDetailsService generateAdmin(){
         UserDetails admin = User.builder()
                 .username("root")
@@ -66,7 +66,7 @@ public class MainSecurity {
                 .roles("EMPLOYEE")
                 .build();
         return new InMemoryUserDetailsManager(admin);
-    }
+    }*/
 
 
 
