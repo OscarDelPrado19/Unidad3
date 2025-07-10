@@ -2,6 +2,7 @@ package utez.edu.mx.unidad3.modules.clients;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import utez.edu.mx.unidad3.modules.warehouse.Warehouse;
 
 import java.util.List;
@@ -18,9 +19,11 @@ public class Client {
     private String name;
 
     @Column(name = "email", nullable = false, unique = true)
+    @Pattern(regexp = "^[a-z0-9][a-z0-9_.]{3,}@[a-z]{2,}(\\.[[a-z]{2,}){1,2}$", message = "Favor de ingresar un correo valido")
     private String email;
 
     @Column(name = "phone", nullable = false)
+    @Pattern(regexp = "^[0-9]{10}$", message = "El número de teléfono debe tener 10 dígitos")
     private String phone;
 
     @OneToMany(mappedBy = "client")

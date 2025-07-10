@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +66,7 @@ public class ClientController {
                     }
             )
     })
-    public ResponseEntity<APIResponse> saveClient(@RequestBody Client payload){
+    public ResponseEntity<APIResponse> saveClient(@RequestBody @Valid Client payload){
         APIResponse response = clientService.saveClient(payload);
         return new ResponseEntity<>(response,response.getStatus());
     }
